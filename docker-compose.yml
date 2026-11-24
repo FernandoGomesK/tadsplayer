@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: tadsplayer-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init-databases.sql:/docker-entrypoint-initdb.d/init-databases.sql
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: tadsplayer-rabbitmq
+    ports:
+      - "5672:5672"   # Porta de comunicação AMQP (Spring Boot)
+      - "15672:15672" # Painel Web de gerenciamento (login: guest / guest)
